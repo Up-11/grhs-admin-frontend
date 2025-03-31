@@ -7,6 +7,10 @@ export default defineNuxtConfig({
 		plugins: [tailwindcss()],
 	},
 	css: ['~/assets/css/main.css'],
+	ui: {
+		colorMode: false,
+	},
+	ssr: false,
 	modules: [
 		'@nuxt/content',
 		'@nuxt/eslint',
@@ -14,5 +18,12 @@ export default defineNuxtConfig({
 		'@nuxt/icon',
 		'@nuxt/image',
 		'@nuxt/ui',
+		'@pinia/nuxt',
 	],
+	runtimeConfig: {
+		public: {
+			apiUrl: process.env.NUXT_PUBLIC_API_URL,
+			apiNoPrefix: process.env.NUXT_PUBLIC_API_NO_PREFIX,
+		},
+	},
 })

@@ -1,10 +1,12 @@
 <script lang="ts" setup></script>
 
 <template>
-	<div class="h-screen">
-		<aside>1</aside>
-		<header>2</header>
-		<main>
+	<div>
+		<AppSidebar />
+		<AppHeader />
+		<main
+			class="h-[100vh-80px] bg-white rounded-3xl mt-20 p-4 mr-2 mb-2 ml-[250px]"
+		>
 			<slot />
 		</main>
 	</div>
