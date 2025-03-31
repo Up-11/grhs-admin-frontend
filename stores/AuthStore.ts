@@ -45,11 +45,14 @@ export const useAuthStore = defineStore('AuthStore', () => {
 		const storedUser = localStorage.getItem('user')
 
 		if (token && storedUser) {
-			setAuthData(JSON.parse(storedUser), token)
-			accessToken.value = token
-		}
+			const NewUser = JSON.parse(storedUser)
+			console.log(NewUser)
 
-		isLoading.value = false
+			setAuthData(NewUser, token)
+			accessToken.value = token
+		} else {
+			logout()
+		}
 	}
 	return {
 		email: user.value.email,
@@ -59,5 +62,6 @@ export const useAuthStore = defineStore('AuthStore', () => {
 		mutateAuthData,
 		isLoading,
 		initializeAuth,
+		accessToken,
 	}
 })

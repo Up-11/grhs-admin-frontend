@@ -10,9 +10,11 @@ useHead({
 
 <template>
 	<UApp class="bg-neutral-100">
-		<NuxtLoadingIndicator color="green" />
-		<NuxtLayout>
-			<NuxtPage />
-		</NuxtLayout>
+		<AuthProvider>
+			<NuxtLoadingIndicator color="green" />
+			<NuxtLayout>
+				<NuxtPage />
+			</NuxtLayout>
+		</AuthProvider>
 	</UApp>
 </template>

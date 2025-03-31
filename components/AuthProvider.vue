@@ -1,7 +1,7 @@
-<script setup>
+<script setup lang="ts">
 import { onMounted } from 'vue'
 
-const authStore = useUserStore()
+const authStore = useAuthStore()
 
 onMounted(() => {
 	authStore.initializeAuth()
@@ -9,6 +9,5 @@ onMounted(() => {
 </script>
 
 <template>
-	<slot v-if="!authStore.isLoading" />
-	<div v-else>LOADING</div>
+	<slot />
 </template>

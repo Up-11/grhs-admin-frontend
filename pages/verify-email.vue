@@ -8,6 +8,7 @@ definePageMeta({
 })
 const toast = useToast()
 const router = useRouter()
+const authStore = useAuthStore()
 
 const tokenInput = ref<string[] | null>()
 
@@ -21,13 +22,14 @@ const { mutate: login, isLoading } = useMutation({
 	mutationFn: (data: string) => {
 		return AuthService.verifyEmail(data)
 	},
-	onSuccess: () => {
+	onSuccess: data => {
 		toast.add({
 			title: 'Успех',
-			description: 'Авторизация прошла успешно',
+			description: data.message,
 			color: 'success',
 		})
-		router.push(ROUTES.INDEX)
+		authStore.setAuthData(data.user, data.accessToken)
+		router.replace(ROUTES.INDEX)
 	},
 	onError: err => {
 		toast.add({

@@ -5,6 +5,20 @@ export interface IAuthData {
 	accessToken: string
 }
 
+export interface IVerifyResponse {
+	user: IUser
+	accessToken: string
+	message: string
+}
+
+export interface ILoginResponse {
+	authData: IAuthData
+	emailData: {
+		message: string
+		success: boolean
+	}
+}
+
 export const saveTokenToStorage = (accessToken: string) => {
 	Cookies.set('accessToken', accessToken)
 }

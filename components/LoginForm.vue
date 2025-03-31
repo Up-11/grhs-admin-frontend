@@ -18,19 +18,30 @@ const state = reactive<Partial<Schema>>({
 
 const toast = useToast()
 const router = useRouter()
+const authStore = useAuthStore()
 
 const { mutate: login, isLoading } = useMutation({
 	mutationFn: (data: Schema) => {
 		return AuthService.login(data.email, data.password)
 	},
 	onSuccess: data => {
-		if (data?.success) {
+		if (data.emailData) {
+			console.log(data.emailData)
+
 			toast.add({
 				title: 'Успех',
-				description: data.message,
+				description: data.emailData.message,
 				color: 'success',
 			})
 			router.push(ROUTES.AUTH.VERIFY)
+		} else {
+			toast.add({
+				title: 'Успех',
+				description: 'Вы успешно авторизовались',
+				color: 'success',
+			})
+			authStore.setAuthData(data.authData.user, data.authData.accessToken)
+			router.replace(ROUTES.INDEX)
 		}
 	},
 	onError: err => {
