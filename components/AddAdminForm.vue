@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import * as z from 'zod'
 import type { FormSubmitEvent } from '@nuxt/ui'
+import { AuthService } from '~/api/auth.service'
+
+const emit = defineEmits(['closeCollapsible', 'refresh'])
 
 const schema = z.object({
 	email: z.string().email('Некорректный email'),
@@ -8,20 +11,37 @@ const schema = z.object({
 })
 
 type Schema = z.output<typeof schema>
+const toast = useToast()
 
 const state = reactive<Partial<Schema>>({
 	email: '',
 	password: '',
 })
 
-const toast = useToast()
+const { mutate } = useMutation({
+	mutationFn: (data: Schema) => AuthService.register(data.email, data.password),
+	onSuccess: () => {
+		toast.add({
+			title: 'Успех',
+			description: 'Вы успешно зарегистрировали нового администратора.',
+			color: 'success',
+		})
+		state.email = ''
+		state.password = ''
+		emit('closeCollapsible')
+		emit('refresh')
+	},
+	onError: error => {
+		toast.add({
+			title: 'Ошибка',
+			description: error.message,
+			color: 'error',
+		})
+	},
+})
+
 async function onSubmit(event: FormSubmitEvent<Schema>) {
-	toast.add({
-		title: 'Success',
-		description: 'The form has been submitted.',
-		color: 'success',
-	})
-	console.log(event.data)
+	mutate(event.data)
 }
 </script>
 

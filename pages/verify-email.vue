@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { AuthService } from '~/api/auth/auth.service'
+import { AuthService } from '~/api/auth.service'
 import { ROUTES } from '~/config/routes'
 
 definePageMeta({

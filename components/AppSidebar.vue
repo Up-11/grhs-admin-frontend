@@ -21,12 +21,13 @@ const sections = [
 ]
 
 const router = useRouter()
+const store = useAuthStore()
 </script>
 
 <template>
-	<aside class="h-screen fixed inset-y-0 bg-slate-100 w-[250px] pt-20 p-4">
+	<aside class="h-screen fixed inset-y-0 w-[250px] pt-25 p-4">
 		<h2 class="font-bold text-2xl">Секции</h2>
-		<div class="mt-2 flex flex-col gap-1">
+		<div class="mt-2 flex flex-col h-full gap-1">
 			<UButton
 				v-for="section in sections"
 				:key="section.label"
@@ -42,6 +43,22 @@ const router = useRouter()
 				]"
 				size="lg"
 			/>
+			<ApproveModal
+				@approve="
+					() =>
+						store.logout(() => {
+							router.replace(ROUTES.AUTH.LOGIN)
+						})
+				"
+			>
+				<UTooltip text="Выход из системы">
+					<UButton
+						class="mt-auto mb-10"
+						label=" Выйти"
+						variant="soft"
+						color="neutral"
+						size="lg" /></UTooltip
+			></ApproveModal>
 		</div>
 	</aside>
 </template>

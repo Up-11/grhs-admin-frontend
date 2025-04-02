@@ -2,7 +2,7 @@
 import * as z from 'zod'
 import type { FormSubmitEvent } from '@nuxt/ui'
 import { ROUTES } from '~/config/routes'
-import { AuthService } from '~/api/auth/auth.service'
+import { AuthService } from '~/api/auth.service'
 
 const schema = z.object({
 	email: z.string().email('Некорректный email'),

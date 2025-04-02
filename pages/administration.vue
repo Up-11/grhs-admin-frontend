@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import Skeleton from '@nuxt/ui/runtime/components/Skeleton.vue'
+import { AuthService } from '~/api/auth.service'
 import type { User } from '~/types/types'
 
 definePageMeta({
@@ -7,9 +8,10 @@ definePageMeta({
 })
 const admins = ref<User[] | null>(null)
 
-const { data, status } = useFetch<User[]>(
-	'http://localhost:4200/api/authorization',
-	{ server: false }
+const isOpen = ref<boolean>(false)
+
+const { data, status, refresh } = useAuthFetch<User[]>(
+	'http://localhost:4200/api/authorization'
 )
 
 watch(
@@ -19,6 +21,34 @@ watch(
 	},
 	{ immediate: true }
 )
+const toast = useToast()
+
+const { mutate: deleteAcc } = useMutation({
+	mutationFn: (id: string) => AuthService.deleteById(id),
+	onSuccess: () => {
+		toast.add({
+			title: 'Успех',
+			description: 'Аккаунт успешно удален.',
+			color: 'success',
+		})
+	},
+	onError: error => {
+		toast.add({
+			title: 'Ошибка',
+			description: error.message,
+			color: 'error',
+		})
+	},
+})
+
+const onDelete = async (id: string) => {
+	await deleteAcc(id)
+	refresh()
+}
+
+const closeCollapsible = () => {
+	isOpen.value = false
+}
 
 const operatingAdmins = computed(() =>
 	admins.value?.filter(admin => admin.isEmailVerified)
@@ -31,7 +61,11 @@ const notOperatingAdmins = computed(() =>
 <template>
 	<section>
 		<h1 class="text-2xl font-bold">Мониторинг админов</h1>
-		<UCollapsible :unmount-on-hide="false" class="flex flex-col gap-2 w-full">
+		<UCollapsible
+			v-model="isOpen"
+			:unmount-on-hide="false"
+			class="flex flex-col gap-2 w-full"
+		>
 			<UButton
 				label="Добавить нового администратора в систему"
 				color="neutral"
@@ -51,7 +85,11 @@ const notOperatingAdmins = computed(() =>
 						description="Вводите только существующую электронную почту, она потребуется при входе администратора в аккаунт."
 						icon="lucide:mark"
 					/>
-					<AddAdminForm class="mt-5" />
+					<AddAdminForm
+						class="mt-5"
+						@refresh="refresh"
+						@close-collapsible="closeCollapsible"
+					/>
 				</div>
 			</template>
 		</UCollapsible>
@@ -85,7 +123,28 @@ const notOperatingAdmins = computed(() =>
 						:key="admin.id"
 						:email="admin.email"
 						class="w-full"
-					/>
+						:show-controls="true"
+					>
+						<template #controls
+							><UList class="flex flex-col">
+								<!-- 		<UListItem>
+									<UButton variant="ghost" class="w-full" color="neutral">
+										Редактировать
+									</UButton>
+								</UListItem> -->
+								<UListItem>
+									<UButton
+										variant="ghost"
+										class="w-full"
+										color="error"
+										@click="onDelete(admin.id)"
+									>
+										Удалить
+									</UButton>
+								</UListItem>
+							</UList>
+						</template>
+					</AdminCard>
 				</div>
 				<div v-else-if="status === 'pending'" class="flex flex-col gap-3">
 					<Skeleton v-for="i in 3" :key="i" class="w-full h-10" />

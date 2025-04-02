@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import Cookies from 'js-cookie'
-import { AuthService } from '~/api/auth/auth.service'
+import { AuthService } from '~/api/auth.service'
 
 export interface IUser {
 	id: string | null
@@ -17,7 +17,9 @@ export const useAuthStore = defineStore('AuthStore', () => {
 	const accessToken = ref<string | null>(null)
 	const isLoading = ref<boolean>(true)
 
-	const isLoggedIn = computed(() => user.value.email !== null)
+	const isLoggedIn = computed(() => user.value.id !== null)
+
+	const userId = computed(() => user.value.id)
 
 	const setAuthData = (newUser: IUser | null, token: string) => {
 		user.value = newUser === null ? initialUser : newUser
@@ -36,9 +38,10 @@ export const useAuthStore = defineStore('AuthStore', () => {
 		localStorage.setItem('user', JSON.stringify(newUserData))
 	}
 
-	const logout = () => {
+	const logout = (cb?: () => void) => {
 		AuthService.logout()
 		setAuthData(initialUser, '')
+		cb?.()
 	}
 	const initializeAuth = () => {
 		const token = Cookies.get('accessToken')
@@ -46,16 +49,16 @@ export const useAuthStore = defineStore('AuthStore', () => {
 
 		if (token && storedUser) {
 			const NewUser = JSON.parse(storedUser)
-			console.log(NewUser)
-
 			setAuthData(NewUser, token)
-			accessToken.value = token
+			return true
 		} else {
 			logout()
+			return false
 		}
 	}
 	return {
 		email: user.value.email,
+		userId,
 		isLoggedIn,
 		logout,
 		setAuthData,

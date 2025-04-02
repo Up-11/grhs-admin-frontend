@@ -31,7 +31,7 @@ import ContentBlock from '~/components/ContentBlock.vue'
 				class="col-span-2"
 				title="Администраторы"
 				text="Добавить нового администратора"
-				link="/events"
+				link="/administration"
 				image-src="/Security-3--Streamline-Milano.png"
 			/>
 		</div>

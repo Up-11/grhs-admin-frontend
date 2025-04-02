@@ -1,5 +1,5 @@
 import { API_ROUTES } from '~/config/apiRoutes'
-import { publicApi } from '../interceptors'
+import { privateApi, publicApi } from './interceptors'
 import {
 	removeTokenFromStorage,
 	saveToStorage,
@@ -43,6 +43,23 @@ export const AuthService = {
 		}
 
 		return response.data
+	},
+
+	async editProfile(
+		dto: { email?: string; password?: string },
+		userId: string
+	) {
+		return await privateApi.patch<IAuthData>(
+			API_ROUTES.AUTH.EDIT_PROFILE(userId),
+			{
+				dto,
+			}
+		)
+	},
+	async deleteById(userId: string) {
+		return await privateApi.delete<IAuthData>(
+			API_ROUTES.AUTH.DELETE_BY_ID(userId)
+		)
 	},
 
 	logout() {

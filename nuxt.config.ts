@@ -23,7 +23,10 @@ export default defineNuxtConfig({
 	runtimeConfig: {
 		public: {
 			apiUrl: process.env.NUXT_PUBLIC_API_URL,
-			apiNoPrefix: process.env.NUXT_PUBLIC_API_NO_PREFIX,
+			apiNoPrefix: process.env.NUXT_PUBLIC_API_URL_NO_PREFIX,
 		},
+	},
+	fonts: {
+		families: [{ name: 'Noto Sans ', provider: 'google' }],
 	},
 })

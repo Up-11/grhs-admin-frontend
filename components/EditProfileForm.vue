@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import * as z from 'zod'
 import type { FormSubmitEvent } from '@nuxt/ui'
-import { ROUTES } from '~/config/routes'
+import { AuthService } from '~/api/auth.service'
 
 const schema = z
 	.object({
@@ -18,20 +18,55 @@ type Schema = z.output<typeof schema>
 
 const store = useAuthStore()
 
+const toast = useToast()
+
 const state = reactive<Partial<Schema>>({
 	email: store.email || '',
 	password: '',
 	passwordRepeat: '',
 })
 
-const toast = useToast()
+const { mutate } = useMutation({
+	mutationFn: (data: Schema) =>
+		AuthService.editProfile(
+			{ email: data.email, password: data.password },
+			store.userId!
+		),
+	onSuccess: () => {
+		toast.add({
+			title: 'Успех',
+			description: 'Данные успешно изменены.',
+			color: 'success',
+		})
+	},
+	onError: error => {
+		toast.add({
+			title: 'Ошибка',
+			description: error.message,
+			color: 'error',
+		})
+	},
+})
+
+const { mutate: deleteAcc } = useMutation({
+	mutationFn: (id: string) => AuthService.deleteById(id),
+	onSuccess: () => {
+		toast.add({
+			title: 'Успех',
+			description: 'Аккаунт успешно удален.',
+			color: 'success',
+		})
+	},
+	onError: error => {
+		toast.add({
+			title: 'Ошибка',
+			description: error.message,
+			color: 'error',
+		})
+	},
+})
 async function onSubmit(event: FormSubmitEvent<Schema>) {
-	toast.add({
-		title: 'Success',
-		description: 'The form has been submitted.',
-		color: 'success',
-	})
-	console.log(event.data)
+	mutate(event.data)
 }
 </script>
 
@@ -73,9 +108,19 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 				class="w-full"
 			/>
 		</UFormField>
+		<div class="flex justify-between items-center">
+			<ApproveModal
+				title="Удаление аккаунта"
+				description="Вы уверены? Аккаунт восстановить невозможно"
+				:buttons-text="['Отменить', 'Удалить']"
+				@approve="() => deleteAcc(store.userId!)"
+			>
+				<UButton size="xl" class="self-end" color="error">
+					Удалить аккаунт
+				</UButton>
+			</ApproveModal>
 
-		<UButton size="xl" class="self-end" type="submit" :to="ROUTES.AUTH.VERIFY">
-			Подтвердить
-		</UButton>
+			<UButton size="xl" class="self-end" type="submit"> Подтвердить </UButton>
+		</div>
 	</UForm>
 </template>

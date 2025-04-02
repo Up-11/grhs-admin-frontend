@@ -4,3 +4,6 @@
 body {
 	@apply text-neutral-900;
 }
+html {
+	font-family: 'Noto Sans', sans-serif;
+}

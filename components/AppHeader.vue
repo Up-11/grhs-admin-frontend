@@ -3,7 +3,7 @@ import { ProfileEditModal } from '../.nuxt/components';
 
 <template>
 	<header
-		class="h-20 w-full flex items-center bg-slate-100 z-10 fixed top-0 justify-between inset-x-0 pr-4"
+		class="h-20 w-full flex items-center bg-transparent backdrop-blur-2xl border-b border-b-neutral-300 z-10 fixed top-0 justify-between inset-x-0 pr-4"
 	>
 		<AppLogo />
 		<div class="flex items-center">
