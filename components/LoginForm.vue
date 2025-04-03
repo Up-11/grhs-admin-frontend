@@ -68,7 +68,7 @@ const canSendData = computed(() => {
 		class="space-y-4 flex flex-col w-full max-w-70 self-center mx-auto items-center justify-center"
 		@submit="onSubmit"
 	>
-		<UFormField label="Электронная почта" name="email">
+		<UFormField class="w-full" label="Электронная почта" name="email">
 			<UInput
 				v-model="state.email"
 				placeholder="Введите электронную почту"
@@ -88,6 +88,7 @@ const canSendData = computed(() => {
 				v-model="state.password"
 				color="primary"
 				type="password"
+				class="w-full max-w-70"
 				size="xl"
 				placeholder="Введите пароль"
 			/>

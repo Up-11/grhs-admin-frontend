@@ -21,6 +21,9 @@ useHead({
 		class="bg-neutral-100"
 	>
 		<AuthProvider>
+			<head>
+				<link rel="shortcut icon" href="/logo_svg.svg" type="image/x-icon" />
+			</head>
 			<NuxtLoadingIndicator color="green" />
 			<NuxtLayout>
 				<NuxtPage />
