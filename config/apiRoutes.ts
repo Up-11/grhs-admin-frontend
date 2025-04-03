@@ -16,7 +16,7 @@ export const API_ROUTES = {
 		CREATE_BANNER: '/banner/create-banner',
 		UPDATE_BANNER: '/banner/update-banner',
 		DELETE_BANNER: (id: string) => `/banner/delete-banner/${id}`,
-		UPDATE_POSITION: '/update-position',
+		UPDATE_POSITION: '/banner/update-position',
 	},
 	EVENTS: {
 		INDEX: '/events',
@@ -32,7 +32,7 @@ export const API_ROUTES = {
 		DELETE_PRODUCT: (id: string) => `/products/delete-product/${id}`,
 	},
 	CATEGORIES: {
-		INDEX: '/categories',
+		INDEX: '/products/categories',
 		CREATE_CATEGORY: '/products/create-category',
 		UPDATE_CATEGORY: (id: string) => `/products/update-category/${id}`,
 		DELETE_CATEGORY: (id: string) => `/products/delete-category/${id}`,

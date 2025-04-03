@@ -9,9 +9,7 @@ export interface IMainBlock {
 	id: string
 	title: TextWithLangs
 	description: TextWithLangs
-	button: TextWithLangs
-	href: string
-	imageSide: 'left' | 'right'
+	imageSide: ImageSide
 	position: number
 	image: string
 }
@@ -23,6 +21,17 @@ export interface IEvent {
 	image: string
 	content: EventContent
 	formattedDate?: DateValue
+}
+export interface IProduct {
+	id: string
+	name: TextWithLangs
+	description: TextWithLangs
+	price: MinMaxValue
+	volumes: MinMaxValue
+	nutrition: Nutrition
+	composition: string[]
+	categoryId: string
+	image: string
 }
 export type ImageSide = 'left' | 'right'
 

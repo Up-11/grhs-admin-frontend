@@ -20,9 +20,6 @@ const open = ref(false)
 		:ui="{ footer: 'justify-end' }"
 	>
 		<slot />
-		<template #body>
-			<Placeholder class="h-48" />
-		</template>
 
 		<template #footer>
 			<UButton

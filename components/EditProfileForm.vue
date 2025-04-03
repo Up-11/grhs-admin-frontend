@@ -84,8 +84,8 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 				color="primary"
 				size="xl"
 				class="w-full"
-			/>
-		</UFormField>
+			/> </UFormField
+		>`
 
 		<UFormField label="Пароль" name="password">
 			<UInput
