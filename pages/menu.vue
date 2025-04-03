@@ -145,7 +145,7 @@ const { mutate: deleteCategory } = useMutation({
 					</div>
 				</template>
 			</UTabs>
-			<AddCategoryModal @refresh="refresh">
+			<AddCategoryModal v-else @refresh="refresh">
 				<UButton
 					label="добавить категорию"
 					class="self-start"
