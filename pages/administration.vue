@@ -12,7 +12,7 @@ const admins = ref<User[] | null>(null)
 const isOpen = ref<boolean>(false)
 
 const { data, status, refresh } = useAuthFetch<User[]>(
-	`${API_ROUTES.BASE_URL}/api/authorization`
+	`${API_ROUTES.BASE_URL}${API_ROUTES.GET_ALL_ADMINISTRATORS}`
 )
 
 watch(
