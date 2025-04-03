@@ -49,13 +49,6 @@ const onDelete = async (id: string) => {
 const closeCollapsible = () => {
 	isOpen.value = false
 }
-
-const operatingAdmins = computed(() =>
-	admins.value?.filter(admin => admin.isEmailVerified)
-)
-const notOperatingAdmins = computed(() =>
-	admins.value?.filter(admin => !admin.isEmailVerified)
-)
 </script>
 
 <template>
@@ -93,62 +86,29 @@ const notOperatingAdmins = computed(() =>
 				</div>
 			</template>
 		</UCollapsible>
-		<div class="grid grid-cols-2 gap-8 items-start mt-5">
-			<div class="flex flex-col gap-4">
-				<h2 class="text-xl text-center font-semibold mb-4">
-					Действующие администраторы
-				</h2>
-				<div v-if="status === 'success'" class="flex flex-col gap-3">
-					<AdminCard
-						v-for="admin in operatingAdmins"
-						:id="admin.id"
-						:key="admin.id"
-						:email="admin.email"
-						class="w-full"
-					/>
-				</div>
-				<div v-else-if="status === 'pending'" class="flex flex-col gap-3">
-					<Skeleton v-for="i in 3" :key="i" class="w-full h-10" />
-				</div>
+		<div class="flex flex-col gap-4">
+			<h2 class="text-xl text-center font-semibold mb-4">
+				Действующие администраторы
+			</h2>
+			<div v-if="status === 'success'" class="flex flex-col gap-3">
+				<AdminCard
+					v-for="admin in admins"
+					:id="admin.id"
+					:key="admin.id"
+					:email="admin.email"
+					class="w-full"
+				>
+					<template #controls>
+						<UButton
+							color="neutral"
+							icon="lucide:menu"
+							@click="onDelete(admin.id)"
+						/>
+					</template>
+				</AdminCard>
 			</div>
-
-			<div class="flex flex-col gap-4">
-				<h2 class="text-xl text-center font-semibold mb-4">
-					Не прошедшие верификацию
-				</h2>
-				<div v-if="status === 'success'" class="flex flex-col gap-3">
-					<AdminCard
-						v-for="admin in notOperatingAdmins"
-						:id="admin.id"
-						:key="admin.id"
-						:email="admin.email"
-						class="w-full"
-						:show-controls="true"
-					>
-						<template #controls
-							><UList class="flex flex-col">
-								<!-- 		<UListItem>
-									<UButton variant="ghost" class="w-full" color="neutral">
-										Редактировать
-									</UButton>
-								</UListItem> -->
-								<UListItem>
-									<UButton
-										variant="ghost"
-										class="w-full"
-										color="error"
-										@click="onDelete(admin.id)"
-									>
-										Удалить
-									</UButton>
-								</UListItem>
-							</UList>
-						</template>
-					</AdminCard>
-				</div>
-				<div v-else-if="status === 'pending'" class="flex flex-col gap-3">
-					<Skeleton v-for="i in 3" :key="i" class="w-full h-10" />
-				</div>
+			<div v-else-if="status === 'pending'" class="flex flex-col gap-3">
+				<Skeleton v-for="i in 3" :key="i" class="w-full h-10" />
 			</div>
 		</div>
 	</section>

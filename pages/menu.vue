@@ -145,6 +145,14 @@ const { mutate: deleteCategory } = useMutation({
 					</div>
 				</template>
 			</UTabs>
+			<AddCategoryModal @refresh="refresh">
+				<UButton
+					label="добавить категорию"
+					class="self-start"
+					icon="lucide:plus"
+					color="neutral"
+				/>
+			</AddCategoryModal>
 		</div>
 	</div>
 </template>
