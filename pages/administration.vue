@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import Skeleton from '@nuxt/ui/runtime/components/Skeleton.vue'
 import { AuthService } from '~/api/auth.service'
+import { API_ROUTES } from '~/config/apiRoutes'
 import type { User } from '~/types/types'
 
 definePageMeta({
@@ -11,7 +12,7 @@ const admins = ref<User[] | null>(null)
 const isOpen = ref<boolean>(false)
 
 const { data, status, refresh } = useAuthFetch<User[]>(
-	'http://localhost:4200/api/authorization'
+	`${API_ROUTES.BASE_URL}/api/authorization`
 )
 
 watch(
