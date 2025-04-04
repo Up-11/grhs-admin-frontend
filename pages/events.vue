@@ -11,7 +11,7 @@ definePageMeta({
 const events = ref<IEvent[]>([])
 
 const { data, refresh, status } = useAuthFetch<IEvent[]>(
-	`${API_ROUTES.BASE_URL} ${API_ROUTES.EVENTS.INDEX}`
+	`${API_ROUTES.BASE_URL}${API_ROUTES.EVENTS.INDEX}`
 )
 
 provide(eventsRefreshKey, refresh)

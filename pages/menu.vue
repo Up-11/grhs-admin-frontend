@@ -76,6 +76,14 @@ const { mutate: deleteCategory } = useMutation({
 	<div class="relative">
 		<div class="flex justify-between items-center">
 			<h1 class="text-2xl font-bold">Мониторинг меню</h1>
+			<AddCategoryModal @refresh="refresh">
+				<UButton
+					label="добавить категорию"
+					class="self-start"
+					icon="lucide:plus"
+					color="neutral"
+				/>
+			</AddCategoryModal>
 		</div>
 		<USeparator class="my-2" />
 		<div class="flex gap-1">
@@ -87,11 +95,6 @@ const { mutate: deleteCategory } = useMutation({
 				color="neutral"
 			>
 				<template #content="{ item }">
-					<div class="flex items-center gap-1 absolute top-0 right-0">
-						<AddCategoryModal @refresh="refresh">
-							<UButton class="self-start" icon="lucide:plus" color="neutral" />
-						</AddCategoryModal>
-					</div>
 					<UPopover>
 						<UButton
 							class="self-end mb-4 absolute top-12 right-0"
@@ -144,14 +147,6 @@ const { mutate: deleteCategory } = useMutation({
 					</div>
 				</template>
 			</UTabs>
-			<AddCategoryModal v-else @refresh="refresh">
-				<UButton
-					label="добавить категорию"
-					class="self-start"
-					icon="lucide:plus"
-					color="neutral"
-				/>
-			</AddCategoryModal>
 		</div>
 	</div>
 </template>
