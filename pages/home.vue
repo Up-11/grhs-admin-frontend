@@ -6,12 +6,10 @@ definePageMeta({
 	title: 'Главная страница',
 })
 
-const { configUrl } = useConfigUrl()
-
 const editingId = ref<string | null>(null)
 
 const { data, refresh } = useFetch<IMainBlock[]>(
-	configUrl(API_ROUTES.BANNER.GET_BANNERS)
+	`${API_ROUTES.BASE_URL}${API_ROUTES.BANNER.GET_BANNERS}`
 )
 const setEditingId = async (id: string | null) => {
 	await clearEditingId()

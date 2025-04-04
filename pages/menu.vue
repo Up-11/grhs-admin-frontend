@@ -23,9 +23,8 @@ export interface TabsItemWithCategory extends TabsItem {
 
 const toast = useToast()
 
-const { configUrl } = useConfigUrl()
 const { data, refresh } = useAuthFetch<CategoryWithProducts[]>(
-	configUrl(API_ROUTES.CATEGORIES.INDEX)
+	`${API_ROUTES.BASE_URL}${API_ROUTES.CATEGORIES.INDEX}`
 )
 const categories = ref<CategoryWithProducts[]>([])
 const items = ref<TabsItemWithCategory[]>([])
