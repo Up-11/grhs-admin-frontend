@@ -180,7 +180,7 @@ const createEvent = async () => {
 							@update:text="newText => updateContent(key, newText)"
 						/>
 						<UButton
-							icon="i-heroicons-x-mark"
+							icon="lucide:x"
 							size="sm"
 							variant="ghost"
 							color="error"
@@ -190,7 +190,7 @@ const createEvent = async () => {
 					</div>
 
 					<UButton
-						icon="i-heroicons-plus"
+						icon="lucide:plus"
 						label="Добавить раздел"
 						variant="outline"
 						class="mt-4"

@@ -24,7 +24,7 @@ import ContentBlock from '~/components/ContentBlock.vue'
 				class="col-span-2"
 				title="Меню"
 				text="Изменить меню"
-				link="/events"
+				link="/menu"
 				image-src="/Coffee-Tea-4--Streamline-Milano.png"
 			/>
 			<ContentBlock
