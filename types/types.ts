@@ -29,7 +29,7 @@ export interface IProduct {
 	price: MinMaxValue
 	volumes: MinMaxValue
 	nutrition: Nutrition
-	composition: string[]
+	composition: TextWithLangs
 	categoryId: string
 	image: string
 }

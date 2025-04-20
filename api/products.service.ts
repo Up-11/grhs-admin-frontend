@@ -14,7 +14,7 @@ export interface ProductsDto {
 	nutrition: Nutrition
 	categoryId: string
 	image: string
-	composition: string[]
+	composition: TextWithLangs
 }
 export type UpdateProductsDto = Partial<ProductsDto>
 

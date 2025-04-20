@@ -24,7 +24,10 @@ const schema = z.object({
 		max: z.number(),
 	}),
 	categoryId: z.string(),
-	composition: z.string(),
+	composition: z.object({
+		ru: z.string(),
+		en: z.string(),
+	}),
 	nutrition: z.object({
 		calories: z.object({
 			value: z.number(),
@@ -73,7 +76,10 @@ const state = reactive<Schema>({
 		value: 0,
 		max: 0,
 	},
-	composition: '',
+	composition: {
+		ru: '',
+		en: '',
+	},
 	categoryId: '',
 	nutrition: {
 		calories: {
@@ -100,15 +106,11 @@ const state = reactive<Schema>({
 })
 
 const currentImage = ref<string | null>(null)
-const createCompositionArray = (composition: string) => {
-	return composition.split(',').map(curr => curr.trim())
-}
-
 const { mutate: create } = useMutation({
 	mutationFn: (data: Schema) =>
 		productsService.createProduct({
 			...data,
-			composition: createCompositionArray(state.composition),
+			composition: state.composition,
 			image: currentImage.value || '',
 		}),
 	onSuccess: () => {
@@ -229,11 +231,18 @@ const selectItems = categories!.value.map(curr => ({
 						</UFormField>
 					</div>
 					<UFormField
-						label="Состав"
+						label="Состав (Ру)"
 						description="Запишите состав отделяя элементы через запятую"
 						name="composition"
 					>
-						<UInput v-model="state.composition" class="w-full" />
+						<UInput v-model="state.composition.ru" class="w-full" />
+					</UFormField>
+					<UFormField
+						label="Состав (En)"
+						description="Запишите состав отделяя элементы через запятую"
+						name="composition"
+					>
+						<UInput v-model="state.composition.en" class="w-full" />
 					</UFormField>
 					<div>
 						<h2 class="my-2 font-semibold">Категория</h2>

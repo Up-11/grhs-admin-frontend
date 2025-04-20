@@ -1,6 +1,6 @@
 export const API_ROUTES = {
-	HOST: 'http://api.up-mailer.ru',
-	BASE_URL: 'http://api.up-mailer.ru/api',
+	HOST: 'http://localhost:4200',
+	BASE_URL: 'http://localhost:4200/api',
 	GET_ALL_ADMINISTRATORS: '/administrators',
 	MEDIA: '/media',
 	AUTH: {
