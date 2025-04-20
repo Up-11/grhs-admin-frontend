@@ -1,3 +1,3 @@
 export default function formatUrl(path: string) {
-	return `http://localhost:4200/${path}`
+	return `http://api.up-mailer.ru/${path}`
 }
